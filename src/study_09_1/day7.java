@@ -3,33 +3,42 @@ package study_09_1;
 import java.io.*;
 import java.util.*;
 
-public class day6 {
+public class day7 {
 
   public static void main(String[] args) throws IOException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-    //1. 응시자 수 n, 수상자 k를 입력 받는다.
-    String[] input = br.readLine().split(" ");
+    // 1. 입력받기
+    StringTokenizer st = new StringTokenizer(br.readLine());
+    int[] input = new int[5];  // 나무 조각 배열
 
-    int n = Integer.parseInt(input[0]);
-    int k = Integer.parseInt(input[1]);
-
-    //2. 응시자들의 점수를 입력받는다.
-    Integer[] score = new Integer[n];
-    String[] inputScore = br.readLine().split(" ");
-
-    for(int i = 0; i < n; i++) {
-      score[i] = Integer.parseInt(inputScore[i]);
+    for (int i = 0; i < 5; i++) {
+      input[i] = Integer.parseInt(st.nextToken());
     }
 
-    //3. 내림차순 정렬
-    Arrays.sort(score, Collections.reverseOrder());
+    // 2. 버블 정렬 방식으로 숫자 정렬 및 출력
+    boolean sorted = false; // 정렬 여부를 체크하는 변수
 
-    //4. 커트라인 찾기
-    int cutLine = score[k - 1];
+    while (!sorted) { // 배열이 정렬될 때까지 반복
+      sorted = true; // 루프가 시작할 때 배열이 정렬되었다고 가정
 
-    //5. 결과 출력
-    System.out.println(cutLine);
+      for (int i = 0; i < 4; i++) { // 4번까지 비교, 5번째는 없으므로
+        if (input[i] > input[i + 1]) {
+          // 인접한 두 수가 크기 순이 아니라면 교환
+          int temp = input[i];
+          input[i] = input[i + 1];
+          input[i + 1] = temp;
+
+          // 교환 후 배열 출력
+          for (int j = 0; j < input.length; j++) {
+            System.out.print(input[j] + " ");
+          }
+          System.out.println(); // 배열 출력 후 줄바꿈
+
+          sorted = false; // 교환이 발생했으므로 아직 정렬되지 않음
+        }
+      }
+    }
 
     br.close();
   }
